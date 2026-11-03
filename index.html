@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Householder Motion Embedding (HME) · NeurIPS 2026</title>
+  <meta name="description" content="Householder Motion Embedding: Noise Modulation for Motion-Controllable Video Generation. NeurIPS 2026.">
+  <meta property="og:title" content="Householder Motion Embedding (HME) · NeurIPS 2026">
+  <meta property="og:description" content="Motion-controllable video generation by transforming the noise in channel space instead of warping it.">
+  <meta property="og:image" content="static/images/og.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1526'/%3E%3Cpath d='M9 8v16M23 8v16M9 16h14' stroke='%23f2a33a' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<!-- ============================ HERO ============================ -->
+<header class="hero">
+  <div class="hero-inner">
+    <p class="venue">NeurIPS 2026 Spotlight</p>
+    <h1 class="title"><span class="accent">Householder</span> Motion Embedding</h1>
+    <p class="subtitle">Noise Modulation for Motion-Controllable Video Generation</p>
+
+    <ul class="authors">
+      <li>Tao Jun Lin<sup>1,2,*</sup></li>
+      <li>Jinhong Ni<sup>1</sup></li>
+      <li>Ruyi Zha<sup>1</sup></li>
+      <li>Yifu Wang<sup>2</sup></li>
+      <li>Xibin Song<sup>2</sup></li>
+      <li>Pan Ji<sup>2</sup></li>
+      <li>Hongdong Li<sup>1,3</sup></li>
+    </ul>
+    <ul class="affils">
+      <li><sup>1</sup>The Australian National University</li>
+      <li><sup>2</sup>Vertex Lab</li>
+      <li><sup>3</sup>Amazon Inc.</li>
+    </ul>
+    <p class="corresp"><sup>*</sup>Corresponding author</p>
+
+    <!-- Paste the real URLs into href="" below. An empty href shows the button as "soon". -->
+    <nav class="links" aria-label="Paper links">
+      <a class="btn" data-label="arXiv" href="">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 2v6h6M9 13h8M9 17h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span>arXiv</span>
+      </a>
+      <a class="btn" data-label="Code" href="">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Code</span>
+      </a>
+      <a class="btn" href="#results">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="13" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 10l5-3v10l-5-3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <span>Videos</span>
+      </a>
+      <a class="btn" href="#bibtex">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v16l-5-3.5L7 20z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <span>BibTeX</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================ TEASER VIDEO ============================ -->
+<section class="teaser-video wrap">
+  <div class="video-frame">
+    <video id="teaser" src="static/videos/teaser.mp4" poster="static/videos/teaser.jpg"
+           muted loop playsinline controls preload="metadata"></video>
+  </div>
+</section>
+
+<!-- ============================ ABSTRACT ============================ -->
+<section class="wrap narrow" id="abstract">
+  <h2>Abstract</h2>
+  <p>Diffusion models for video generation have achieved remarkable success, yet precise motion control under explicit user guidance remains challenging. Recent noise-warping methods introduce temporal correlations by warping the noise according to the user-provided motion signal. However, standard spatial warping generally disrupts the noise’s i.i.d. Gaussian structure, requiring distribution correction, such as Jacobian-based correction, but at a substantial computational overhead. We propose <strong>Householder Motion Embedding (HME)</strong>, which encodes the motion signal into the noise through a sequence of Householder reflections that together form an orthogonal transformation applied to each location’s channel vector. <strong>HME</strong> exactly preserves the spatial Gaussian structure within each frame while introducing cross-frame correlations that promote temporally consistent video. <strong>HME</strong> is agnostic to the network architecture and integrates directly into standard video diffusion fine-tuning pipelines. Experiments on different scenarios show that <strong>HME</strong> matches or outperforms the state of the art, while achieving a 2.7× speedup over noise warping. These results demonstrate that per-location Householder transformations in channel space offer a principled and efficient alternative to noise warping for motion-controllable video generation.</p>
+</section>
+
+<!-- ============================ TEASER FIGURE ============================ -->
+<section class="wrap" id="overview">
+  <figure class="fig">
+    <a href="static/images/teaser_fig.png" target="_blank" rel="noopener" title="Open full-size figure"><img src="static/images/teaser_fig.png" alt="Comparison of spatial noise warping, which moves noise between locations, with HME, which applies a per-location Householder transformation in channel space; plus three applications: motion transfer, local object motion control and camera motion control." loading="lazy"></a>
+    <figcaption><strong>(a)</strong> Prior methods warp the noise spatially along a motion field and need costly correction steps to stay Gaussian. <strong>(b)</strong> HME keeps every noise vector at its location and applies a <em>per-location Householder transformation in channel space</em>, which preserves spatial Gaussianity by construction. HME supports <strong>(c1)</strong> motion transfer, <strong>(c2)</strong> local object motion control and <strong>(c3)</strong> camera motion control.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================ VIDEOS ============================ -->
+<section class="wrap" id="results">
+  <h2>Videos</h2>
+  <p class="lead">All results are generated from a single first frame. Pick an example, then compare HME with each baseline side by side, or show all methods at once. Videos play in sync.</p>
+
+  <div class="task" id="task-highlights">
+    <div class="task-head">
+      <h3>Highlights</h3>
+      <p>Inputs and HME results for the three applications.</p>
+    </div>
+    <div class="hl">
+      <div class="hl-row">
+        <p class="hl-name">Camera motion control</p>
+        <div class="hl-grid">
+          <figure class="pane img"><span class="tag">Trajectory</span><img src="static/videos/highlights/camera/trajectory.jpg" alt="Target camera trajectory plotted in 3D" loading="lazy"></figure>
+          <figure class="pane img"><span class="tag">First frame</span><img src="static/videos/highlights/camera/first_frame.jpg" alt="First frame: aerial view of a manor and gardens" loading="lazy"></figure>
+          <figure class="pane"><span class="tag">Motion signal</span><video data-src="static/videos/highlights/camera/motion_signal.mp4" poster="static/videos/highlights/camera/motion_signal.jpg" muted loop playsinline></video></figure>
+          <figure class="pane is-ours"><span class="tag ours">HME (ours)</span><video data-src="static/videos/highlights/camera/ours.mp4" poster="static/videos/highlights/camera/ours.jpg" muted loop playsinline></video></figure>
+        </div>
+      </div>
+      <div class="hl-row">
+        <p class="hl-name">Local object motion control</p>
+        <div class="hl-grid">
+          <figure class="pane img"><span class="tag">First frame</span><img src="static/videos/highlights/object/first_frame.jpg" alt="First frame: a penguin on snow" loading="lazy"></figure>
+          <figure class="pane img"><span class="tag">Motion map</span><img src="static/videos/highlights/object/motion_map.jpg" alt="Masked penguin with a drag arrow to the right" loading="lazy"></figure>
+          <figure class="pane"><span class="tag">Motion signal</span><video data-src="static/videos/highlights/object/motion_signal.mp4" poster="static/videos/highlights/object/motion_signal.jpg" muted loop playsinline></video></figure>
+          <figure class="pane is-ours"><span class="tag ours">HME (ours)</span><video data-src="static/videos/highlights/object/ours.mp4" poster="static/videos/highlights/object/ours.jpg" muted loop playsinline></video></figure>
+        </div>
+      </div>
+      <div class="hl-row">
+        <p class="hl-name">Motion transfer</p>
+        <div class="hl-grid three">
+          <figure class="pane img"><span class="tag">First frame</span><img src="static/videos/highlights/transfer/first_frame.jpg" alt="First frame: an astronaut on the moon" loading="lazy"></figure>
+          <figure class="pane"><span class="tag">Reference video</span><video data-src="static/videos/highlights/transfer/reference.mp4" poster="static/videos/highlights/transfer/reference.jpg" muted loop playsinline></video></figure>
+          <figure class="pane is-ours"><span class="tag ours">HME (ours)</span><video data-src="static/videos/highlights/transfer/ours.mp4" poster="static/videos/highlights/transfer/ours.jpg" muted loop playsinline></video></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" id="task-transfer" data-task="transfer">
+    <div class="task-head">
+      <h3>Motion transfer</h3>
+      <p>The motion of a reference video is transferred to a new video generated from its first frame (DAVIS), or to a different scene described by a text prompt.</p>
+    </div>
+    <div class="viewer"></div>
+  </div>
+
+  <div class="task" id="task-object" data-task="object">
+    <div class="task-head">
+      <h3>Local object motion control</h3>
+      <p>A user-drawn drag on the first frame moves the selected object, while the background stays consistent (MC-Bench).</p>
+    </div>
+    <div class="viewer"></div>
+  </div>
+
+  <div class="task" id="task-camera" data-task="camera">
+    <div class="task-head">
+      <h3>Camera motion control</h3>
+      <p>The camera follows the trajectory of the reference video, converted into optical flow (DL3DV).</p>
+    </div>
+    <div class="viewer"></div>
+  </div>
+
+  <div class="task" id="task-gamma">
+    <div class="task-head">
+      <h3>Controlling motion strength with γ</h3>
+      <p>The noise degradation level γ blends the motion-embedded noise with fresh Gaussian noise. Lower γ follows the input flow more closely; higher γ leaves the model more generative freedom. We use γ = 0.3 by default.</p>
+    </div>
+    <div class="gamma">
+      <div class="gamma-grid">
+        <figure class="pane"><span class="tag">Reference video</span><video data-src="static/videos/gamma/ref.mp4" poster="static/videos/gamma/ref.jpg" muted loop playsinline></video></figure>
+        <figure class="pane"><span class="tag">Optical flow</span><video data-src="static/videos/gamma/flow.mp4" poster="static/videos/gamma/flow.jpg" muted loop playsinline></video></figure>
+        <figure class="pane"><span class="tag ours" id="gamma-tag">HME, γ = 0.3</span><video id="gamma-video" data-src="static/videos/gamma/g03.mp4" poster="static/videos/gamma/g03.jpg" muted loop playsinline></video></figure>
+      </div>
+      <div class="gamma-ctl">
+        <label for="gamma-range">γ</label>
+        <input id="gamma-range" type="range" min="0" max="4" step="1" value="1" aria-valuetext="0.3">
+        <div class="ticks" aria-hidden="true"><span>0.1</span><span>0.3</span><span>0.5</span><span>0.7</span><span>0.9</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ BIBTEX ============================ -->
+<section class="wrap" id="bibtex">
+  <h2>BibTeX</h2>
+  <div class="bib">
+    <button class="copy" type="button" aria-label="Copy BibTeX">Copy</button>
+<pre><code id="bibcode">@inproceedings{lin2026hme,
+  title     = {Householder Motion Embedding: Noise Modulation for
+               Motion-Controllable Video Generation},
+  author    = {Lin, Tao Jun and Ni, Jinhong and Zha, Ruyi and Wang, Yifu
+               and Song, Xibin and Ji, Pan and Li, Hongdong},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2026}
+}</code></pre>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <p>Householder Motion Embedding · NeurIPS 2026 · Contact: taojun.lin@anu.edu.au</p>
+</footer>
+
+<script src="static/js/main.js"></script>
+</body>
+</html>
