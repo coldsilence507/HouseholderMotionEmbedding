@@ -20,7 +20,7 @@
 </p>
 
 <p align="center">
-  Project page (coming soon) &nbsp;|&nbsp; arXiv (coming soon) &nbsp;|&nbsp; Code (coming soon)
+    &nbsp; arXiv (coming soon) &nbsp;|&nbsp; Code (coming soon)
 </p>
 
 <p align="center">
