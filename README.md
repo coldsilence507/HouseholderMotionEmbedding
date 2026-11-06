@@ -20,7 +20,7 @@
 </p>
 
 <p align="center">
-    <href src="https://arxiv.org/abs/2611.07294">arXiv</href> |    <href src="https://github.com/coldsilence507/HouseholderMotionEmbedding-Release">Code</href>
+    <a href="https://arxiv.org/abs/2611.07294">arXiv</a> |    <a href="https://github.com/coldsilence507/HouseholderMotionEmbedding-Release">Code</a>
 </p>
 
 <p align="center">
