@@ -24,6 +24,10 @@
 </p>
 
 <p align="center">
+  <img src="static/images/teaser_fig.png" alt="HME is a novel way to embed motion into noise for motion-controllable video generation." width="100%">
+</p>
+
+<p align="center">
   <img src="static/images/pipeline.png" alt="HME pipeline: motion signal extraction, noise construction with per-location Householder reflections, and image-to-video inference" width="100%">
 </p>
 
