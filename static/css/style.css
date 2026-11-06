@@ -1,22 +1,22 @@
 /* ---------- tokens ---------- */
 :root {
-  --bg: #fbfaf7;
-  --surface: #ffffff;
-  --surface-2: #f3f1ec;
-  --ink: #0d1526;
-  --ink-2: #44506a;
-  --ink-3: #6f7a90;
-  --line: #e4e1da;
-  --accent: #e8952a;        /* amber, matches the teaser video */
-  --accent-ink: #9a5a0c;    /* amber text on light backgrounds */
-  --accent-soft: #fdf1df;
-  --hero: #0b1220;
+  --bg: #0a0f1a;
+  --surface: #111827;
+  --surface-2: #172033;
+  --ink: #e8ecf4;
+  --ink-2: #b4bdd0;
+  --ink-3: #8792a8;
+  --line: #243049;
+  --accent: #f2a33a;
+  --accent-ink: #f5b55c;
+  --accent-soft: #2a2114;
+  --hero: #070b14;
   --hero-ink: #e9edf5;
   --hero-ink-2: #9aa6bd;
   --radius: 14px;
-  --shadow: 0 1px 2px rgba(13,21,38,.06), 0 8px 24px rgba(13,21,38,.06);
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  color-scheme: light;
+  color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
   :root {
