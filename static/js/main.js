@@ -29,7 +29,7 @@
         {
           id: "cyberpunk", name: "Robots", ar: "720 / 480", baselines: ["gwtf", "dismo", "motionpro"],
           caption: "The motion of three people in the reference video is transferred to a different scene, generated from a new first frame and the prompt “Cyberpunk rooftop at night … three humanoid robots standing in a triangular group pose …”."
-        }
+        },
         { id: "bear", name: "Bear" },
         { id: "car-roundabout", name: "Car" },
         { id: "goat", name: "Goat" },
